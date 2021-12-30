@@ -10,7 +10,6 @@ const PostDetails = () => {
                     <Link to="single.html"><h4>Front end developer</h4></Link>
                     <p className="address"><span className="lnr lnr-map-marker"></span> Ikeja, Lagos</p>
                 
-                {/* <h5>Job Nature: Full time</h5> */}
                     <Link to="/" className="btns btn-apply">Apply Via Find Job</Link>
                 </div>																	
             </div>

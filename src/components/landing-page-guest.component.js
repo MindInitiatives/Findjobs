@@ -11,7 +11,7 @@ const LandingPageGuest = () => {
         {
             posts: [],
             currentPost: null,
-            currentIndex: -1
+            currentIndex: 0
         }
     )
 
@@ -39,7 +39,7 @@ const LandingPageGuest = () => {
         JobService.findByKeyword(keyword)
           .then(response => {
             setPost({
-              posts: response.data
+              posts: response.data.data
             });
             console.log(response);
           })
@@ -52,7 +52,7 @@ const LandingPageGuest = () => {
 		JobService.getAll()
           .then(response => {
             setPost({
-              posts: response.data
+              posts: response.data.data
             });
             console.log(response);
           })
@@ -78,7 +78,9 @@ const LandingPageGuest = () => {
 		  if (keyword !== "") {
 		fetchDataByKeyword(keyword)
 		  }
+		  else {
 		  fetchAllData()
+		  }
 	  }, [keyword])
 
     return (
@@ -103,9 +105,10 @@ const LandingPageGuest = () => {
 				<div className="container">
 					<div className="row justify-content-center d-flex">
 						<div className="col-lg-6 post-list">
-						{post.posts.map((item, index) => (
-							<Post viewDetails={itemId => setItemId(itemId)} key={item.id} post={item,index}/>
-						))}
+						{post.posts.length > 0 ? post.posts.map((item, index) => (
+							<Post viewDetails={itemId => setItemId(itemId)} key={item.id} index={index} item={item}/>
+						)) :
+						<div>could not fetch data</div>}
 
 							<Link className="text-uppercase loadmore-btn mx-auto d-block" to="category.html">Load More job Posts</Link>
 
