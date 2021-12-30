@@ -2,6 +2,10 @@ import http from "../http-common";
 
 class JobService {
   getAll() {
+    return http.get("/jobs");
+  }
+
+  getMy() {
     return http.get("/my/jobs");
   }
 
