@@ -29,9 +29,8 @@ const LandingPageGuest = () => {
 		}
 
 	const setActivePost = (post, index) => {
-		const data = 
             setPost(prevState => {
-				return {...prevState, data}
+				return {...prevState, currentPost: post, currentIndex: index}
 			});
 	  }
 
