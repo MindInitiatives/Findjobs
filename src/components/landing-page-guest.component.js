@@ -29,10 +29,13 @@ const LandingPageGuest = () => {
 		}
 
 	const setActivePost = (post, index) => {
-		setPost({
+		const data = {
 			currentPost: post,
 		  	currentIndex: index
-		});
+		}
+            setPost(prevState => {
+				return {...prevState, data}
+			});
 	  }
 
 
@@ -60,8 +63,9 @@ const LandingPageGuest = () => {
 	const fetchAllData = () => {
 		JobService.getAll()
           .then(response => {
-            setPost({
-				posts: response.data.data
+			const data = response.data.data
+            setPost(prevState => {
+				return {...prevState, data}
 			});
             console.log(response);
           })
