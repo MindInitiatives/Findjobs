@@ -61,7 +61,7 @@ const LandingPageGuest = () => {
           .then(response => {
 			const data = response.data.data
             setPost(prevState => {
-				return {...prevState, posts:data, currentPost: post, }
+				return {...prevState, posts:data, currentPost: data[0], }
 			});
             console.log(response);
           })
