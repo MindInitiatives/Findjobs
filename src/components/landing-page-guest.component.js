@@ -95,10 +95,15 @@ const LandingPageGuest = () => {
 				<div className="container">
 					<div className="row justify-content-center d-flex">
 						<div className="col-lg-6 post-list">
-						{post.length > 0 ? post.map((item, index) => (
-							<Post setActivePost={(item, index)} key={item.id} index={index} item={item}/>
-						)) :
-						<div>could not fetch data</div>}
+						{
+						post.length > 0 
+						?
+						post.map((item, index) => (
+							<Post activePost={(p, i)=>{setActivePost(p,i)}} key={item.id} index={index} item={item}/>
+						))
+						:
+						<div>could not fetch data</div>
+						}
 
 							<Link className="text-uppercase loadmore-btn mx-auto d-block" to="category.html">Load More job Posts</Link>
 
