@@ -2631,7 +2631,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 .post-list .single-post:hover,
-.post-list .single-post:active {
+.post-list .single-post.active {
   background: #0F4A7B;
   color: #FFFFFF;
   box-shadow: 0px 4px 17px rgba(98, 190, 203, 0.15);
@@ -2641,9 +2641,9 @@ body.mobile-nav-active #mobile-nav-toggle {
 .post-list .single-post:hover .title h4,
 .post-list .single-post:hover .amount,
 .post-list .single-post:hover p,
-.post-list .single-post:active .title h4,
-.post-list .single-post:active .amount,
-.post-list .single-post:active p {
+.post-list .single-post.active .title h4,
+.post-list .single-post.active .amount,
+.post-list .single-post.active p {
   color: #FFFFFF;
 }
 

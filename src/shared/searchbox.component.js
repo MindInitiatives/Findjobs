@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 
 const Searchbox = (props) => {
+	console.log(props)
 	const [searchValue, setSearchValue] = useState("");
 
     return (

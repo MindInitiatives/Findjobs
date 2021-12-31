@@ -7,18 +7,7 @@ import JobService from '../services/job.service'
 import PostDetails from './post-details.component'
 
 const LandingPageGuest = () => {
-	const [post, setPost] = useState(
-        {
-            posts: [],
-            currentPost: null,
-            currentIndex: 0
-        }
-    )
-
-	const [details, setDetails] = useState({})
-
-	const [keyword, setKeyword] = useState("")
-	const [itemId, setItemId] = useState(0)
+	const [post, setPost] = useState([])
 
 	const setActivePost = (post, index) => {
 		setPost({
@@ -27,20 +16,23 @@ const LandingPageGuest = () => {
 		});
 	  }
 
+	const [details, setDetails] = useState({})
+
+	const [keyword, setKeyword] = useState("")
+	const [itemId, setItemId] = useState(0)
+
 	const refreshList = () => {
 		fetchAllData();
 		setPost({
 			currentPost: null,
-		  	currentIndex: -1
+		  	currentIndex: 0
 		});
 	  }
 
 	const fetchDataByKeyword = (keyword) => {
         JobService.findByKeyword(keyword)
           .then(response => {
-            setPost({
-              posts: response.data.data
-            });
+            setPost(response.data.data);
             console.log(response);
           })
           .catch(e => {
@@ -51,9 +43,7 @@ const LandingPageGuest = () => {
 	const fetchAllData = () => {
 		JobService.getAll()
           .then(response => {
-            setPost({
-              posts: response.data.data
-            });
+            setPost(response.data.data);
             console.log(response);
           })
           .catch(e => {
@@ -105,8 +95,8 @@ const LandingPageGuest = () => {
 				<div className="container">
 					<div className="row justify-content-center d-flex">
 						<div className="col-lg-6 post-list">
-						{post.posts.length > 0 ? post.posts.map((item, index) => (
-							<Post viewDetails={itemId => setItemId(itemId)} key={item.id} index={index} item={item}/>
+						{post.length > 0 ? post.map((item, index) => (
+							<Post setActivePost={(item, index)} key={item.id} index={index} item={item}/>
 						)) :
 						<div>could not fetch data</div>}
 
