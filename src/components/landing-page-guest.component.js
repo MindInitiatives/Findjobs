@@ -99,7 +99,7 @@ const LandingPageGuest = () => {
 						post.length > 0 
 						?
 						post.map((item, index) => (
-							<Post activePost={(p, i)=>{setActivePost(p,i)}} key={item.id} index={index} item={item}/>
+							<Post key={item.id} index={index} item={item}/>
 						))
 						:
 						<div>could not fetch data</div>

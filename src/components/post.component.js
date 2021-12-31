@@ -18,13 +18,13 @@ const Post = (props) => {
 		});
 	  }
 
-    const { item, index, activePost } = props;
+    const { item, index } = props;
     const { posts, currentPost, currentIndex } = post;
     return (
         <React.Fragment>
             <div className={
                     "single-post " +
-                    (index === activePost.index ? "active" : "")
+                    (index === currentIndex ? "active" : "")
                   }>
 								<div className="details">
 									<div className="title d-flex flex-row justify-content-between">
@@ -39,7 +39,7 @@ const Post = (props) => {
 									</p>
 									{/* <h5>Job Nature: Full time</h5> */}
 									<div className="btns">
-									    <button type="button" className="btn post-btn" onClick={() => props.activePost(item,index)}>
+									    <button type="button" className="btn post-btn" onClick={() => setActivePost(item,index)}>
 									      Search
 									    </button>
 									</div>
