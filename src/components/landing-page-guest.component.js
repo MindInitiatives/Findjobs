@@ -29,10 +29,7 @@ const LandingPageGuest = () => {
 		}
 
 	const setActivePost = (post, index) => {
-		const data = {
-			currentPost: post,
-		  	currentIndex: index
-		}
+		const data = 
             setPost(prevState => {
 				return {...prevState, data}
 			});
@@ -65,7 +62,7 @@ const LandingPageGuest = () => {
           .then(response => {
 			const data = response.data.data
             setPost(prevState => {
-				return {...prevState, data}
+				return {...prevState, posts:data}
 			});
             console.log(response);
           })
