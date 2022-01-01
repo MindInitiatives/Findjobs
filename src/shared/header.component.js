@@ -10,7 +10,7 @@ const Header = () => {
 			    <div className="container">
 			    	<div className="row align-items-center justify-content-between d-flex">
 				      <div id="logo">
-				        <Link to="index.html"><img src="img/logo.png" alt="" title="" /></Link>
+				        <Link to="index.html"><img src="assets/img/logo.png" alt="" title="" /></Link>
 				      </div>
 				      <nav id="nav-menu-container">
 				        <ul className="nav-menu">
