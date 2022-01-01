@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const corsURL = "https://cors-anywhere.herokuapp.com/"
+
 export default axios.create({
-  baseURL: "https://cors-anywhere.herokuapp.com/https://api.jobboard.tedbree.com/v1",
+  baseURL: `${corsURL}https://api.jobboard.tedbree.com/v1`,
   headers: {
     "Content-type": "application/json"
   }

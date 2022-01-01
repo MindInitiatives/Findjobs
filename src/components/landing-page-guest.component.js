@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import useDidMountEffect from '../helpers/useDidMountEffect'
 import { Link } from 'react-router-dom'
 import Header from '../shared/header.component'
 // import Searchbox from '../shared/searchbox.component'
 // import Post from './post.component'
 import JobService from '../services/job.service'
+import Pagination from "@material-ui/lab/Pagination";
 // import PostDetails from './post-details.component'
 
 const LandingPageGuest = () => {
@@ -12,13 +14,39 @@ const LandingPageGuest = () => {
             posts: [],
             currentPost: null,
             currentIndex: 0,
-			keyword: ""
+			keyword: "",
+
+			page: 1,
+			count: 0,
+			pageSize: 3,
         }
 		)
 
 		useEffect(() => {
-			fetchAllData()
+			  fetchAllData()
 		}, [])
+
+		useDidMountEffect(() => {
+			fetchAllData() // react please run me if 'page' changes, but not on initial render
+		}, [post.page, post.keyword]);  
+
+		const getRequestParams = (keyword, page, pageSize) => {
+			let params = {};
+		
+			if (keyword) {
+			  params["q"] = keyword;
+			}
+		
+			if (page) {
+			  params["page"] = page - 1;
+			}
+		
+			if (pageSize) {
+			  params["size"] = pageSize;
+			}
+		
+			return params;
+		  }
 
 	const onChangeSearchTitle = (e) => {
 		const keyword = e.target.value;
@@ -46,8 +74,8 @@ const LandingPageGuest = () => {
 	const fetchDataByKeyword = () => {
         JobService.findByKeyword(keyword)
           .then(response => {
-            setPost({
-				posts: response.data.data
+			setPost(prevState => {
+				return {...prevState, posts:response.data.data}
 			});
             console.log(response);
           })
@@ -57,11 +85,13 @@ const LandingPageGuest = () => {
       }
 
 	const fetchAllData = () => {
-		JobService.getAll()
+		const { keyword, page, pageSize } = post;
+    	const params = getRequestParams(keyword, page, pageSize);
+		JobService.getAll(params)
           .then(response => {
-			const data = response.data.data
+			const data = response.data
             setPost(prevState => {
-				return {...prevState, posts:data, currentPost: data[0], }
+				return {...prevState, posts:data.data, currentPost: data.data[0], count:data.meta.last_page}
 			});
             console.log(response);
           })
@@ -69,6 +99,13 @@ const LandingPageGuest = () => {
             console.log(e);
           });
 	}
+
+	const handlePageChange = (event, value) => {
+		console.log(value)
+		setPost(prevState => {
+			return {...prevState, page: value}
+		});
+	  }
 
 	// const fetchDataById = (itemId) => {
     //     JobService.get(itemId)
@@ -83,7 +120,10 @@ const LandingPageGuest = () => {
     //       });
     //   }
 
-	  const { posts, currentPost, currentIndex, keyword } = post;
+	  const { posts, currentPost, currentIndex, keyword, page, count } = post;
+	  const DATE_OPTIONS = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+	  var cts = currentPost?.created_at,
+      cdate = (new Date(cts)).toLocaleDateString('en-US', DATE_OPTIONS);
 	  console.log(post)
 
     return (
@@ -122,7 +162,7 @@ const LandingPageGuest = () => {
                             </div>
 									</div>
 									<div className="col-lg-2 form-cols">
-									    <button type="button" className="btn btn-info" onClick={() => fetchDataByKeyword()}>
+									    <button type="button" className="btn btn-info" onClick={() => fetchAllData()}>
 									      Search
 									    </button>
 									</div>								
@@ -137,8 +177,9 @@ const LandingPageGuest = () => {
 				<div className="container">
 					<div className="row justify-content-center d-flex">
 						<div className="col-lg-6 post-list">
+						<div className='card-bordered'>
 						{
-						posts.length > 0 
+						posts 
 						?
 						posts.map((item, index) => (
 							<div className={
@@ -167,15 +208,25 @@ const LandingPageGuest = () => {
 						))
 						:
 						<div>could not fetch data</div>
-						}
+						}	
+						</div>
 
-							<Link className="text-uppercase loadmore-btn mx-auto d-block" to="category.html">Load More job Posts</Link>
+						<Pagination
+									className="my-3"
+									count={count}
+									page={page}
+									siblingCount={1}
+									boundaryCount={1}
+									variant="outlined"
+									shape="rounded"
+									onChange={(event, value)=>handlePageChange(event, value)}
+									/>
 
 						</div>
 						<div className="col-lg-6 sidebar">
 						{currentPost ? (	
 						<div className="single-slidebar">
-						
+						<div className="card-bordered">
             <div className="active-relatedjob">
                 <div className="single-rated">
                     <Link to="single.html"><h4>{currentPost.title}</h4></Link>
@@ -184,7 +235,6 @@ const LandingPageGuest = () => {
                     <Link to="/" className="btns btn-apply">Apply Via Find Job</Link>
                 </div>																	
             </div>
-
         <div className="job-details">
             <p>
             {currentPost.description}
@@ -192,14 +242,26 @@ const LandingPageGuest = () => {
             
             <ul>
                 <li>
-                Minimum Qualification: Degree
+                Company : {currentPost.company ? currentPost.company : "Not Available"}
                 </li>
                 <li>
-                Experience Level: Senior level
+                Category : {currentPost.category}
                 </li>
                 <li>
-                Experience Length: 5 years
+                Work Condition : {currentPost.work_condition}
                 </li>
+                <li>
+                Work Type : {currentPost.type}
+                </li>
+                <li>
+                Date Created : {cdate}
+                </li>
+                <li className={
+								(currentPost.benefits === null ? "d-none" : "")
+							  }>
+                Benefits : {currentPost.benefits}
+                </li>
+				
             </ul>
         </div>
 
@@ -232,11 +294,12 @@ const LandingPageGuest = () => {
                 </li>																											
             </ul>
         </div>
+</div>
         </div>	
 		 ) : (
             <div>
               <br />
-              <p>Please click on a Job...</p>
+              <p>...Could not Load selected job</p>
             </div>
 		)}
 						</div>

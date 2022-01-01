@@ -2193,7 +2193,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 .section-gap {
-  padding: 120px 0;
+  padding: 120px 0 0;
 }
 
 .section-title {
@@ -2468,6 +2468,11 @@ body.mobile-nav-active #mobile-nav-toggle {
   background: #0F4A7B;
 }
 
+.post-list .card-bordered {
+  overflow-y: scroll;
+  height: 100vh;
+}
+
 @media (max-width: 960px) {
   .post-list {
     margin-bottom: 50px;
@@ -2680,7 +2685,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 .post-list .single-post .amount {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 600;
   color: #0F4A7B;
   margin-bottom: 15px;
@@ -2844,6 +2849,10 @@ body.mobile-nav-active #mobile-nav-toggle {
   margin-bottom: 30px;
 }
 
+.sidebar .single-slidebar .card-bordered {
+  overflow-y: scroll;
+  height: 100vh;
+}
 /* .sidebar .single-slidebar .active-relatedjob {
   border-bottom: 0.8px solid #EA5566;
 
@@ -2888,7 +2897,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 .sidebar .single-rated h4 {
   margin-bottom: 8px;
     color: #0F4A7B;
-    font-size: 24px;
+    font-size: 18px;
 }
 
 .sidebar .single-rated h6 {
@@ -3965,7 +3974,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 .single-post .title h4 {
   margin-bottom: 10px;
   color: #0F4A7B;
-  font-size: 24px;
+  font-size: 18px;
 }
 
 .single-post .comment-wrap ul li, .single-post .social-wrap ul li {
