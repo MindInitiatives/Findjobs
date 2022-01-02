@@ -2552,6 +2552,16 @@ body.mobile-nav-active #mobile-nav-toggle {
   margin-bottom: 30px;
 }
 
+@media (max-width: 960px) {
+  .post-area .action-area {
+    display: block !important;
+  }
+
+  .post-area .action-area .search-area.no-margin {
+    margin-bottom: 30px !important;
+  }
+}
+
 .post-list .card-bordered {
   overflow-y: scroll;
   height: 100vh;

@@ -9,7 +9,7 @@ const FooterBottom = () => {
 <div className="container footer-bottom">
   <div className="copyright">
   <div id="logo">
-				        <Link to="index.html"><img src="assets/img/logo.png" alt="" title="" /></Link>
+				        <Link to="/"><img src="assets/img/logo.png" alt="" title="" /></Link>
 				      </div>
   <p>
         &copy; 2021 <span className='sitename'>FindJobs</span>
