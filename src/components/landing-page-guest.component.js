@@ -20,12 +20,9 @@ import Divider from '@mui/material/Divider';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-import { useTheme,
-	createTheme,
-	ThemeProvider } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -33,22 +30,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   });
 
 const LandingPageGuest = () => {
-
-
-const newTheme = createTheme({
-	components: {
-	  // Name of the component
-	  MuiButton: {
-		styleOverrides: {
-		  // Name of the slot
-		  root: {
-			// Some CSS
-			textTransform: "initial",
-		  },
-		},
-	  },
-	},
-  });
 
 	const [post, setPost] = useState(
 		{
@@ -111,13 +92,12 @@ const newTheme = createTheme({
 			return params;
 		  }
 
-	const onChangeSearchTitle = (e) => {
-		const keyword = e.target.value;
-	
-		setPost({
-			keyword: keyword
-		});
-		}
+		  const onChangeSearchTitle = (e) => {
+			const keyword = e.target.value;
+			setPost(prevState => {
+				return {...prevState, keyword: keyword}
+			});
+			}
 
 	const setActivePost = (post, index) => {
 		sizes();
@@ -204,10 +184,12 @@ const newTheme = createTheme({
     <React.Fragment>
         <Header/>
         
-        <section className="banner-area relative" id="home">	
-				<div className="overlay overlay-bg"></div>
+        <section className="banner-area relative" id="home">
+				<div className='blob1 ellipse'></div>	
+				<div className='blob2 ellipse'></div>	
+				<div className='blob3 ellipse'></div>	
 				<div className="container">
-					<div className="row fullscreen d-flex align-items-center justify-content-center" style={{height: "343px"}}>
+					<div className="row d-flex align-items-center justify-content-center" style={{height: "343px"}}>
 						<div className="banner-content col-lg-12">
 							<h1 className="text-white text-left">
                             Find Your Dream Job				
@@ -261,10 +243,9 @@ const newTheme = createTheme({
 					<div className="row justify-content-center d-flex">
 						<div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 post-list">
 				<div className="ls-switcher">
-					<div className='showing-result'>Showing&nbsp;{posts.length}&nbsp;results</div>
+					<div className='showing-result'>Showing&nbsp;{posts?.length}&nbsp;results</div>
 					<div className='d-flex justify-content-between align-items-center'>
 						<div>Sort by: </div>
-						<ThemeProvider theme={newTheme}>
 						<Button
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}
@@ -274,7 +255,6 @@ const newTheme = createTheme({
       >
         Latest
       </Button>
-	  </ThemeProvider>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
@@ -361,7 +341,7 @@ const newTheme = createTheme({
                 Work Condition : {currentPost.work_condition}
                 </li>
                 <li>
-                Work Type : {currentPost.type}
+                Job Type : {currentPost.type}
                 </li>
                 <li>
                 Date Created : {cdate}

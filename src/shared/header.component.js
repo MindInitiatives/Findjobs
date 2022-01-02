@@ -14,7 +14,7 @@ const Header = () => {
 				      </div>
 				      <nav id="nav-menu-container">
 				        <ul className="nav-menu">
-				          <li className="menu-active"><Link to="index.html">Jobs</Link></li>
+				          <li className="menu-active"><Link to="/admin">Jobs</Link></li>
 				          <li><Link to="about-us.html">Company Review </Link></li>
 				          <li><Link to="category.html">Find Salaries</Link></li>
 				          <li><Link className="ticker-btn" to="/">Post Job</Link></li>				          				          

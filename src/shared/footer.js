@@ -11,7 +11,9 @@ const Footer = () => {
     <div className="row">
 
       <div className="col-lg-3 col-md-6 footer-contact">
-      <Link to="index.html"><img src="assets/img/logo.png" alt="" title="" /></Link>
+      <div id="logo">
+				        <Link to="index.html"><img src="assets/img/logo.png" alt="" title="" /></Link>
+				      </div>
         <p>
         &copy; 2021 <span className='sitename'>FindJobs</span>
         </p>
