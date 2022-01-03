@@ -40,7 +40,7 @@ const Login = (props) => {
             <h1>Find the best <br/>
 candidates for your <br/>
 organisation.</h1>
-            <img src='assets/img/login-bg.png' alt='login-bg' />
+            <img className='login_bg' src='assets/img/login-bg.png' alt='login-bg' />
         </div>
     </div>
       {/* <div className='login_blb'></div> */}

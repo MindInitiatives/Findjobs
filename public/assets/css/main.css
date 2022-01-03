@@ -2003,12 +2003,7 @@ h1, h2, h3, h4, h5, h6 {
   background-image: url('../img/blobs/login_blobo.svg');
 }
 
-.half .bg .bg-content {
-  /* padding: 0 30px; */
-  /* max-width: 600px; */
-}
-
-.half .bg .bg-content img {
+.half .bg .bg-content .login_bg {
   width: 500px;
 }
 
