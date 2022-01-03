@@ -1,12 +1,25 @@
 import http from "../http-common";
+import { getToken } from "../utils/common";
+
+const config = {
+  headers: { Authorization: `Bearer ${getToken()}` }
+};
 
 class JobService {
   getAll(params) {
     return http.get("/jobs", {params});
   }
 
-  getMy() {
-    return http.get("/my/jobs");
+  login(data) {
+    return http.post("/login", data)
+  }
+
+  getMy(params) {
+    return http.get("/my/jobs", {params});
+  }
+
+  logout() {
+    return http.post("/logout", config)
   }
 
   get(id) {

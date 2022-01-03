@@ -1,8 +1,6 @@
 import AppRouter from './AppRouter';
 import './App.css'
-import { useTheme,
-	createTheme,
-	ThemeProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
   const theme = createTheme({
     components: {
@@ -28,6 +26,7 @@ import { useTheme,
   });
 
 function App() {
+
   return (
     <ThemeProvider theme={theme}>
     <AppRouter />

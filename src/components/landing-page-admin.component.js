@@ -143,7 +143,7 @@ const LandingPageAdmin = () => {
 	const fetchAllData = () => {
 		const { keyword, page, pageSize } = post;
     	const params = getRequestParams(keyword, page, pageSize);
-		JobService.getAll(params)
+		JobService.getMy(params)
           .then(response => {
 			const data = response.data
             setPost(prevState => {
