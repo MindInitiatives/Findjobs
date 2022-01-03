@@ -9,25 +9,48 @@ import Pagination from "@mui/material/Pagination";
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import Footer from '../shared/footer'
-import FooterBottom from '../shared/footer-bottom'
-// import PostDetails from './post-details.component'
+import Footer from '../shared/footer';
+import CustomDialog from '../shared/custom-dialog'
 import Dialog from '@mui/material/Dialog';
-import ListItemText from '@mui/material/ListItemText';
-import ListItem from '@mui/material/ListItem';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
 import Slide from '@mui/material/Slide';
 import { useTheme } from "@mui/material/styles";
+import { styled } from '@mui/material/styles';
 import useMediaQuery from "@mui/material/useMediaQuery";
+import ApplicationForm from './application-form.component'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
   });
+
+const style = {
+	position: 'absolute',
+	top: '50%',
+	left: '50%',
+	transform: 'translate(-50%, -50%)',
+	width: 700,
+	bgcolor: 'background.paper',
+	borderRadius: '10px',
+	boxShadow: 24,
+	p: 4,
+  };
+
+  const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+	'& .MuiDialogContent-root': {
+	  padding: theme.spacing(2),
+	},
+	'& .MuiDialogActions-root': {
+	  padding: theme.spacing(1),
+	},
+	'& .MuiDialog-paper': {
+		width: "450px"
+	}
+  }));
 
 const LandingPageGuest = () => {
 
@@ -53,13 +76,18 @@ const LandingPageGuest = () => {
 		}, [post.page, post.keyword]);  
 
 		const [openModal, setOpenModal] = useState(false);
+		const handleOpenModal = () => setOpenModal(true);
+		const handleCloseModal = () => setOpenModal(false);
+
+		const [openDialog, setOpenDialog] = useState(false);
 
 		const handleClickOpen = () => {
-			setOpenModal(true);
+			console.log("hi")
+			setOpenDialog(true);
 		};
 
-		const handleCloseModal = () => {
-			setOpenModal(false);
+		const handleCloseDialog = () => {
+			setOpenDialog(false);
 		};
 
 		const theme = useTheme();
@@ -108,26 +136,18 @@ const LandingPageGuest = () => {
 	  }
 
 
-	const refreshList = () => {
-		fetchAllData();
-		setPost({
-			currentPost: null,
-		  	currentIndex: 0
-		});
-	  }
-
-	const fetchDataByKeyword = () => {
-        JobService.findByKeyword(keyword)
-          .then(response => {
-			setPost(prevState => {
-				return {...prevState, posts:response.data.data}
-			});
-            console.log(response);
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      }
+	// const fetchDataByKeyword = () => {
+    //     JobService.findByKeyword(keyword)
+    //       .then(response => {
+	// 		setPost(prevState => {
+	// 			return {...prevState, posts:response.data.data}
+	// 		});
+    //         console.log(response);
+    //       })
+    //       .catch(e => {
+    //         console.log(e);
+    //       });
+    //   }
 
 	const fetchAllData = () => {
 		const { keyword, page, pageSize } = post;
@@ -264,9 +284,8 @@ const LandingPageGuest = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleClose}>Yesterday</MenuItem>
+        <MenuItem onClick={handleClose}>Long ago</MenuItem>
       </Menu>
 					</div>
 				</div>
@@ -290,15 +309,14 @@ const LandingPageGuest = () => {
 												<p>
 												{item.description}
 												</p>
-												{/* <h5>Job Nature: Full time</h5> */}
 												<div className="btns">
 													<button type="button" className="btn post-btn" onClick={() => setActivePost(item,index)}>
 													See more
 													</button>
 													<Dialog
         fullScreen
-        open={openModal}
-        onClose={handleCloseModal}
+        open={openDialog}
+        onClose={handleCloseDialog}
         TransitionComponent={Transition}
       >
         <AppBar sx={{ position: 'relative' }}>
@@ -306,7 +324,7 @@ const LandingPageGuest = () => {
             <IconButton
               edge="start"
               color="inherit"
-              onClick={handleCloseModal}
+              onClick={handleCloseDialog}
               aria-label="close"
             >
               <CloseIcon />
@@ -322,7 +340,24 @@ const LandingPageGuest = () => {
                     <Link to="single.html"><h4>{currentPost.title}</h4></Link>
                     <p className="address"><span className="lnr lnr-map-marker"></span> {currentPost.location}</p>
                 
-                    <Link to="/" className="btns btn-apply">Apply Via Find Job</Link>
+                    <Button variant="contained" color="secondary" onClick={handleOpenModal} className="btns btn-apply">Apply Via Find Job</Button>
+					<BootstrapDialog
+        onClose={handleCloseModal}
+        aria-labelledby="customized-dialog-title"
+        open={openModal}
+      >
+        <CustomDialog id="customized-dialog-title" onClose={handleCloseModal}>
+          Modal title
+        </CustomDialog>
+        <DialogContent dividers>
+			hi
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleCloseModal}>
+            Save changes
+          </Button>
+        </DialogActions>
+      </BootstrapDialog>
                 </div>																	
             </div>
         <div className="job-details">
@@ -428,7 +463,25 @@ const LandingPageGuest = () => {
                     <Link to="single.html"><h4>{currentPost.title}</h4></Link>
                     <p className="address"><span className="lnr lnr-map-marker"></span> {currentPost.location}</p>
                 
-                    <Link to="/" className="btns btn-apply">Apply Via Find Job</Link>
+                    <Button variant="contained" color="secondary" onClick={handleOpenModal} className="btns btn-apply">Apply Via Find Job</Button>
+					<BootstrapDialog
+        onClose={handleCloseModal}
+        aria-labelledby="customized-dialog-title"
+        open={openModal}
+      >
+        <CustomDialog id="customized-dialog-title" onClose={handleCloseModal}>
+          {currentPost.title}
+		<p className="address"><span className="lnr lnr-map-marker"></span> {currentPost.location}</p>
+        </CustomDialog>
+        <DialogContent>
+		<ApplicationForm/>
+        </DialogContent>
+        {/* <DialogActions>
+          <Button variant="contained" color='primary' className='btn btn-block' autoFocus onClick={handleCloseModal}>
+            Save changes
+          </Button>
+        </DialogActions> */}
+      </BootstrapDialog>
                 </div>																	
             </div>
         <div className="job-details">

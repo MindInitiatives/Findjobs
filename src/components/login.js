@@ -57,11 +57,11 @@ organisation.</h1>
             <form onSubmit={handleSubmit}>
               <div className="form-group first">
                 <label htmlFor='username'>Email</label>
-                <input type="text" className="form-control" id="username" onChange={e => setUserName(e.target.value)}/>
+                <input type="text" className="form-control" id="username" onChange={e => setUserName(e.target.value)} required/>
               </div>
               <div className="form-group last mb-3">
                 <label htmlFor='password'>Password</label>
-                <input type="password" className="form-control" id="password" onChange={e => setPassword(e.target.value)}/>
+                <input type="password" className="form-control" id="password" onChange={e => setPassword(e.target.value)} required/>
               </div>
               {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
               <input type="submit" value={loading ? 'Loading...' : 'Login'} disabled={loading} className="btn genric-btn primary mt-4"/>

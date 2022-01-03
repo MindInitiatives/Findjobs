@@ -20,7 +20,7 @@ const Header = () => {
 	  .then(response => {
 		console.log(response)
 		removeUserSession();
-		history.push('/login');
+		history.push('/');
 	  })
 	  .catch(e => {
 		console.log(e);
@@ -44,10 +44,7 @@ const Header = () => {
 				          {!isLoggedIn && <li><Link to="/">Find Salaries</Link></li>}
 				          {!isLoggedIn && <li><Link className="ticker-btn" to="/login">Post Job</Link></li>}
 				          {isLoggedIn && <li ><img src='assets/img/notification.svg' alt='notification_icon'/></li>}
-				          {isLoggedIn && <li className="menu-has-children" ><img src='assets/img/Avatar.svg' alt='avatar_icon'/>
-						  <ul>
-						  <li><span onClick={handleLogout}>Logout</span></li>
-						</ul>
+				          {isLoggedIn && <li className="menu-has-children" role="button" onClick={handleLogout} ><img src='assets/img/Avatar.svg' alt='avatar_icon'/>
 						</li>
 					  }		          				          
 				        </ul>
